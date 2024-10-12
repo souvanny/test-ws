@@ -1,12 +1,12 @@
 <?php
 
-use App\Controllers\GetStoreAction;
+use App\Controller\GetStoreAction;
 use App\Core\CommandBus;
 use App\Core\CommandHandlerInterface;
 use App\Core\HandlerLoader;
 use App\Core\QueryBus;
 use App\Core\QueryHandlerInterface;
-use App\Services\ProductService;
+use App\Service\ProductService;
 use App\Core\ServiceContainer;
 
 spl_autoload_register(function ($class) {
@@ -43,6 +43,44 @@ spl_autoload_register(function ($class) {
 //$productController->list();
 
 
+$container = new ServiceContainer();
+
+/*
+// Enregistrement du HandlerLoader
+$container->set('handler_loader', function() {
+    return new HandlerLoader();
+});
+
+// Enregistrement du CommandBus
+$container->set("App\\Core\\CommandBus", function($container) {
+    $commandBus = new CommandBus();
+
+    // Chargement automatique des handlers de commandes
+    $handlerLoader = $container->get('handler_loader');
+    $handlerLoader->loadHandlers(__DIR__ . '/src/Handler', CommandHandlerInterface::class, $commandBus);
+
+    return $commandBus;
+});
+
+// Enregistrement du QueryBus
+$container->set("App\\Core\\QueryBus", function($container) {
+    $queryBus = new QueryBus();
+
+    // Chargement automatique des handlers de requêtes
+    $handlerLoader = $container->get('handler_loader');
+    $handlerLoader->loadHandlers(__DIR__ . '/src/Handler', QueryHandlerInterface::class, $queryBus);
+
+    return $queryBus;
+});
+
+*/
+
+
+//$container->test();
+
+
+/*
+
 // Créer les bus
 $commandBus = new CommandBus();
 $queryBus = new QueryBus();
@@ -51,16 +89,13 @@ $queryBus = new QueryBus();
 $handlerLoader = new HandlerLoader();
 
 // Charger automatiquement les handlers de commandes et de requêtes
-$handlerLoader->loadHandlers(__DIR__ . '/src/Handler/Command', CommandHandlerInterface::class, $commandBus);
-$handlerLoader->loadHandlers(__DIR__ . '/src/Handler/Query', QueryHandlerInterface::class, $queryBus);
+$handlerLoader->loadHandlers(__DIR__ . '/src/Handler', CommandHandlerInterface::class, $commandBus);
+$handlerLoader->loadHandlers(__DIR__ . '/src/Handler', QueryHandlerInterface::class, $queryBus);
 
 
+*/
 
-
-
-
-
-$container = new ServiceContainer();
+//$container = new ServiceContainer();
 
 // Récupérer l'URI
 $request = $_SERVER['REQUEST_URI'];
@@ -80,7 +115,7 @@ $controller = !empty($urlSegments[0]) ? ucfirst($urlSegments[0]) . 'Action' : 'H
 $method = $_SERVER['REQUEST_METHOD'];
 $controller = ucfirst(strtolower($method)) . $controller;
 
-$controller = "App\\Controllers\\$controller";
+$controller = "App\\Controller\\$controller";
 
 
 
@@ -99,7 +134,6 @@ echo "params : ".print_r($params, true)." <br>";
 
 
 if (class_exists($controller)) {
-    $container = new ServiceContainer();
 
     $controllerInstance = $container->get($controller);
 

@@ -1,9 +1,15 @@
 <?php
+
 namespace App\Core;
 
 class CommandBus
 {
     protected $handlers = [];
+
+    public function __construct(HandlerLoader $handlerLoader)
+    {
+        $handlerLoader->loadHandlers(__DIR__ . '/../../src/Handler', CommandHandlerInterface::class, $this);
+    }
 
     public function registerHandler(string $commandClass, callable $handler)
     {

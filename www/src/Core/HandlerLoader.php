@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Core;
 
 use ReflectionClass;
@@ -7,6 +8,7 @@ class HandlerLoader
 {
     public function loadHandlers($directory, $interface, $bus)
     {
+
         // Parcourir tous les fichiers PHP du répertoire donné
         foreach (glob($directory . '/*.php') as $file) {
             // Obtenir le nom de la classe à partir du fichier
@@ -14,6 +16,7 @@ class HandlerLoader
 
             if (class_exists($className)) {
                 $reflection = new ReflectionClass($className);
+
 
                 // Vérifier si la classe implémente l'interface du handler
                 if ($reflection->implementsInterface($interface)) {
@@ -35,12 +38,11 @@ class HandlerLoader
 
     private function registerHandler($handler, $bus)
     {
-        // Enregistrer les handlers dans le bus approprié
-        if ($handler instanceof \App\Core\CommandHandlerInterface) {
+        if ($handler instanceof CommandHandlerInterface) {
             $bus->registerHandler(get_class($handler), $handler);
         }
 
-        if ($handler instanceof \App\Core\QueryHandlerInterface) {
+        if ($handler instanceof QueryHandlerInterface) {
             $bus->registerHandler(get_class($handler), $handler);
         }
     }

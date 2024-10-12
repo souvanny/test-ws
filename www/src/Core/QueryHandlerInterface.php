@@ -4,5 +4,5 @@ namespace App\Core;
 
 interface QueryHandlerInterface
 {
-    public function handle($query);
+    public function __invoke(Object $query);
 }

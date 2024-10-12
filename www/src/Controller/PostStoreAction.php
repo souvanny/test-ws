@@ -1,8 +1,8 @@
 <?php
-namespace App\Controllers;
+namespace App\Controller;
 use App\Services\ProductService;
 
-class DeleteStoreAction
+class PostStoreAction
 {
     private $productService;
 
@@ -12,7 +12,6 @@ class DeleteStoreAction
 
     public function __invoke($params)
     {
-        echo "popi";
         print_r($params);
         $products = $this->productService->listAll();
         echo "Liste des produits : " . implode(', ', $products);

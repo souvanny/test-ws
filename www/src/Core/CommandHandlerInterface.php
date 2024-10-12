@@ -4,5 +4,5 @@ namespace App\Core;
 
 interface CommandHandlerInterface
 {
-    public function handle($command);
+    public function __invoke($command);
 }
