@@ -7,7 +7,7 @@ use App\Database\Model\Shop;
 
 class CreateShopCommandHandler implements CommandHandlerInterface
 {
-    public function __invoke($query)
+    public function __invoke($command): void
     {
         $shop = new Shop();
         $shop->setName('kkkkkk');

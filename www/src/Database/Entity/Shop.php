@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Model;
+namespace App\Database\Entity;
 
 use App\Database\Database;
 use PDO;
@@ -11,8 +11,6 @@ class Shop
     private ?string $name;
 
     private ?bool $isDeleted;
-
-
 
     public function __construct(int $id = null, string $name = null, bool $isDeleted = false)
     {
@@ -64,7 +62,7 @@ class Shop
         $this->isDeleted = $isDeleted;
     }
 
-    public static function find($id) {
+    public static function find($id): ?Shop {
         $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
         $sql = "SELECT * FROM shops WHERE id = ?";
         $params = [$id];
@@ -77,12 +75,18 @@ class Shop
         return new Shop($result['id'], $result['name']);
     }
 
-    public function create() {
+    public function create(): void {
         $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
         $sql = "INSERT INTO shops (name, is_deleted) VALUES (?, ?)";
         $params = [$this->name, $this->isDeleted ? 1 : 0];
-        $stmt = $db->query($sql, $params);
-        return $stmt->rowCount();
+        $db->query($sql, $params);
+    }
+
+    public function remove(): void {
+        $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
+        $sql = "DELETE FROM shops WHERE id=?";
+        $params = [$this->id];
+        $db->query($sql, $params);
     }
 
 
