@@ -2,7 +2,7 @@
 namespace App\Controller;
 use App\Services\ProductService;
 
-class DeleteStoreAction
+class PostShopAction
 {
     private $productService;
 

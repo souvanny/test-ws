@@ -2,7 +2,7 @@
 
 namespace App\Handler\Query;
 
-class GetUserByIdQuery
+class GetShopByIdQuery
 {
     public $userId;
 

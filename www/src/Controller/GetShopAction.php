@@ -2,10 +2,10 @@
 namespace App\Controller;
 use App\Core\CommandBus;
 use App\Core\QueryBus;
-use App\Handler\Query\GetUserByIdQuery;
+use App\Handler\Query\GetShopByIdQuery;
 use App\Service\ProductService;
 
-class GetStoreAction
+class GetShopAction
 {
     private $productService;
     private $queryBus;
@@ -23,7 +23,7 @@ class GetStoreAction
         echo "Liste des produits : " . implode(', ', $products) . "<br>";
         echo "<hr>";
 
-        $getUserByIdQuery = new GetUserByIdQuery(1);
+        $getUserByIdQuery = new GetShopByIdQuery(1);
         $this->queryBus->handle($getUserByIdQuery);
     }
 

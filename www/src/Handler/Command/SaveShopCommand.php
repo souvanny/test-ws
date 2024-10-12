@@ -2,7 +2,7 @@
 
 namespace App\Handler\Query;
 
-class SaveStoreCommand
+class SaveShopCommand
 {
     public $userId;
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Controller\GetStoreAction;
+use App\Controller\GetShopAction;
 use App\Core\CommandBus;
 use App\Core\CommandHandlerInterface;
 use App\Core\HandlerLoader;

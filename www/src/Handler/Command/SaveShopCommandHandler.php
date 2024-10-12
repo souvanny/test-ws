@@ -2,9 +2,9 @@
 
 namespace App\Handler\Query;
 
-use App\Core\QueryHandlerInterface;
+use App\Core\CommandHandlerInterface;
 
-class GetUserByIdQueryHandler implements QueryHandlerInterface
+class SaveShopCommandHandler implements CommandHandlerInterface
 {
     public function __invoke($query)
     {
