@@ -20,7 +20,6 @@ class Database {
     }
     public function connect() {
         $dsn = "mysql:host=$this->host;dbname=$this->dbname";
-        echo $dsn . "<br>";
         $this->pdo = new PDO($dsn, $this->user, $this->pass);
     }
     public function query($sql, $params = []) {

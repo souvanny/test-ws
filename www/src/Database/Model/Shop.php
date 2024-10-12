@@ -10,10 +10,15 @@ class Shop
     private ?int $id;
     private ?string $name;
 
-    public function __construct(int $id = null, string $name = null)
+    private ?bool $isDeleted;
+
+
+
+    public function __construct(int $id = null, string $name = null, bool $isDeleted = false)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->isDeleted = $isDeleted;
     }
 
 
@@ -49,6 +54,15 @@ class Shop
         $this->name = $name;
     }
 
+    public function getIsDeleted(): ?bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted(?bool $isDeleted): void
+    {
+        $this->isDeleted = $isDeleted;
+    }
 
     public static function find($id) {
         $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
@@ -65,8 +79,8 @@ class Shop
 
     public function create() {
         $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
-        $sql = "INSERT INTO shops (name) VALUES (?)";
-        $params = [$this->name];
+        $sql = "INSERT INTO shops (name, is_deleted) VALUES (?, ?)";
+        $params = [$this->name, $this->isDeleted ? 1 : 0];
         $stmt = $db->query($sql, $params);
         return $stmt->rowCount();
     }

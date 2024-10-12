@@ -13,15 +13,11 @@ class CommandBus
 
     public function registerHandler(string $commandClass, callable $handler)
     {
-        echo "### registerHandler ### <br>";
         $this->handlers[$commandClass] = $handler;
     }
 
     public function handle($command)
     {
-        echo "### CommandBus handle ### <br>";
-        print_r($this->handlers);
-
         $commandClass = get_class($command);
         $commandClass .= 'Handler';
 
