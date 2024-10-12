@@ -1,69 +1,44 @@
 <?php
-// Fonction d'autoloading des classes
 
+use App\Controllers\StoreController;
+use App\Services\ProductService;
+use App\Core\ServiceContainer;
 
 spl_autoload_register(function ($class) {
 
-    echo "class: $class ===<br>";
+//    echo "class: $class ===<br>";
 
-    // Ajouter un préfixe pour les classes si nécessaire (par exemple "App")
     $prefix = 'App\\';
     $base_dir = __DIR__ . '/src/';
-    echo "base_dir: $base_dir ===<br>";
+//    echo "base_dir: $base_dir ===<br>";
 
-    // Vérifier si la classe utilise le préfixe
     if (strncmp($prefix, $class, strlen($prefix)) !== 0) {
         echo "préfixe manquant ===<br>";
         return;
     }
 
-    // Obtenir le nom de classe relatif au préfixe
     $relative_class = substr($class, strlen($prefix));
-    echo "relative_class: $relative_class ===<br>";
+//    echo "relative_class: $relative_class ===<br>";
 
-    // Remplacer les backslashes par des slashes et ajouter .php
     $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-    echo "file: $file ===<br>";
+//    echo "file: $file ===<br>";
 
-    // Inclure le fichier si il existe
     if (file_exists($file)) {
-        echo "file exists : $file OK ===<br>";
+//        echo "file exists : $file OK ===<br>";
         require $file;
     }
 
 });
 
+$container = new ServiceContainer();
 
-//spl_autoload_register(function ($className) {
-//    echo "className: $className ===<br>";
-//    $file = __DIR__ . '/controllers/' . $className . '.php';
-//    echo "file: $file ===<br>";
-//    if (file_exists($file)) {
-//        require $file;
-//    } else {
-//        echo "Le fichier pour la classe $className n'a pas été trouvé.";
-//    }
-//});
+$productController = $container->get(StoreController::class);
+
+$productController->list();
 
 
-//spl_autoload_register(function ($className) {
-//
-//    echo "className: $className ===<br>";
-//
-//
-//    // Convertir les namespaces en chemins de fichiers
-//    $file = __DIR__ . '/' . str_replace('\\', '/', $className) . '.php';
-//
-//    echo "file: $file ===<br>";
-//
-//    // Vérifier si le fichier existe
-//    if (file_exists($file)) {
-//        require $file;
-//    } else {
-//        echo "Le fichier pour la classe $className n'a pas été trouvé.";
-//    }
-//});
 
+/*
 // Récupérer l'URI
 $request = $_SERVER['REQUEST_URI'];
 
@@ -91,7 +66,6 @@ for ($i = 2; $i < count($urlSegments); $i += 2) {
     }
 }
 
-// Instancier le contrôleur et appeler la méthode d'action
 if (class_exists($controller)) {
     $controllerInstance = new $controller();
     if (method_exists($controllerInstance, $action)) {
@@ -102,4 +76,6 @@ if (class_exists($controller)) {
 } else {
     echo "Le contrôleur $controller n'existe pas.";
 }
+
+*/
 ?>
