@@ -1,6 +1,6 @@
 <?php
 
-use App\Controllers\StoreController;
+use App\Controllers\GetStoreAction;
 use App\Services\ProductService;
 use App\Core\ServiceContainer;
 
@@ -30,15 +30,16 @@ spl_autoload_register(function ($class) {
 
 });
 
+
+//$container = new ServiceContainer();
+//
+//$productController = $container->get(StoreController::class);
+//
+//$productController->list();
+
+
 $container = new ServiceContainer();
 
-$productController = $container->get(StoreController::class);
-
-$productController->list();
-
-
-
-/*
 // Récupérer l'URI
 $request = $_SERVER['REQUEST_URI'];
 
@@ -52,30 +53,38 @@ $request = trim($request, '/');
 $urlSegments = explode('/', $request);
 
 // Décomposer l'URL en contrôleur et action
-$controller = !empty($urlSegments[0]) ? "App\\Controllers\\".ucfirst($urlSegments[0]) . 'Controller' : 'HomeController'; // Contrôleur par défaut
+$controller = !empty($urlSegments[0]) ? ucfirst($urlSegments[0]) . 'Action' : 'HomeAction'; // Contrôleur par défaut
+
+$method = $_SERVER['REQUEST_METHOD'];
+$controller = ucfirst(strtolower($method)) . $controller;
+
+$controller = "App\\Controllers\\$controller";
+
+
 
 echo "controller: $controller ===<br>";
 
-$action = !empty($urlSegments[1]) ? $urlSegments[1] : 'index';  // Action par défaut
-
 // Décomposer les paramètres nommés (key-value pairs)
 $params = [];
-for ($i = 2; $i < count($urlSegments); $i += 2) {
+for ($i = 1; $i < count($urlSegments); $i += 2) {
     if (isset($urlSegments[$i + 1])) {
         $params[$urlSegments[$i]] = $urlSegments[$i + 1];
     }
 }
 
+
+echo "params : ".print_r($params, true)." <br>";
+
+
 if (class_exists($controller)) {
-    $controllerInstance = new $controller();
-    if (method_exists($controllerInstance, $action)) {
-        $controllerInstance->$action($params);  // Appeler la méthode avec les paramètres
-    } else {
-        echo "L'action $action n'existe pas dans le contrôleur $controller.";
-    }
+    $container = new ServiceContainer();
+
+    $controllerInstance = $container->get($controller);
+
+    $controllerInstance($params);
+
 } else {
     echo "Le contrôleur $controller n'existe pas.";
 }
 
-*/
-?>
+
