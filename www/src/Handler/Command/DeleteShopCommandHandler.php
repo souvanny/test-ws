@@ -10,6 +10,6 @@ class DeleteShopCommandHandler implements CommandHandlerInterface
     public function __invoke($command)
     {
         $shop = new Shop();
-        $shop->find(3)->remove();
+        $shop->find(4)->remove();
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Handler\Command;
 
 use App\Core\CommandHandlerInterface;
-use App\Database\Model\Shop;
+use App\Database\Entity\Shop;
 
 class CreateShopCommandHandler implements CommandHandlerInterface
 {
