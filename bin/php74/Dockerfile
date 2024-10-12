@@ -52,8 +52,6 @@ RUN apt-get update && \
     pecl install imagick && \
     docker-php-ext-enable imagick
 
-RUN pecl install mailparse \
-    && docker-php-ext-enable mailparse \
 
 # Other PHP7 Extensions
 
