@@ -8,7 +8,7 @@ class QueryBus
 
     public function __construct(HandlerLoader $handlerLoader)
     {
-        $handlerLoader->loadHandlers(__DIR__ . '/../../src/Handler', QueryHandlerInterface::class, $this);
+        $handlerLoader->loadHandlers(__DIR__ . '/../../src/Handler/Query', QueryHandlerInterface::class, $this);
     }
 
 

@@ -1,7 +1,8 @@
 <?php
 namespace App\Controller;
+use App\Core\CommandBus;
 use App\Core\QueryBus;
-use App\Handler\GetUserByIdQuery;
+use App\Handler\Query\GetUserByIdQuery;
 use App\Service\ProductService;
 
 class GetStoreAction
@@ -9,7 +10,7 @@ class GetStoreAction
     private $productService;
     private $queryBus;
 
-    public function __construct(QueryBus $queryBus, ProductService $productService) {
+    public function __construct(QueryBus $queryBus, CommandBus $commandBus, ProductService $productService) {
         $this->productService = $productService;
         $this->queryBus = $queryBus;
     }

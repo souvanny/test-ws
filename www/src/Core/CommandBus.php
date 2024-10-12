@@ -8,7 +8,7 @@ class CommandBus
 
     public function __construct(HandlerLoader $handlerLoader)
     {
-        $handlerLoader->loadHandlers(__DIR__ . '/../../src/Handler', CommandHandlerInterface::class, $this);
+        $handlerLoader->loadHandlers(__DIR__ . '/../../src/Handler/Command', CommandHandlerInterface::class, $this);
     }
 
     public function registerHandler(string $commandClass, callable $handler)

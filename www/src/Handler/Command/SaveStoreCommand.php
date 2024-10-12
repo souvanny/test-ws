@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Handler;
+namespace App\Handler\Query;
 
-class GetUserByIdQuery
+class SaveStoreCommand
 {
     public $userId;
 

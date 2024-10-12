@@ -8,15 +8,13 @@ class HandlerLoader
 {
     public function loadHandlers($directory, $interface, $bus)
     {
-
         // Parcourir tous les fichiers PHP du répertoire donné
         foreach (glob($directory . '/*.php') as $file) {
             // Obtenir le nom de la classe à partir du fichier
-            $className = $this->getClassNameFromFile($file);
+            $className = $this->getClassNameFromFile($file, $interface);
 
             if (class_exists($className)) {
                 $reflection = new ReflectionClass($className);
-
 
                 // Vérifier si la classe implémente l'interface du handler
                 if ($reflection->implementsInterface($interface)) {
@@ -28,10 +26,14 @@ class HandlerLoader
         }
     }
 
-    private function getClassNameFromFile($file)
+    private function getClassNameFromFile($file, $interface)
     {
         // Extraire le nom de la classe à partir du chemin du fichier
-        $namespace = 'App\\Handler\\';
+        if (false !== strpos($interface, 'QueryHandlerInterface')) {
+            $namespace = 'App\\Handler\\Query\\';
+        } else {
+            $namespace = 'App\\Handler\\Command\\';
+        }
         $className = basename($file, '.php');
         return $namespace . str_replace('/', '\\', $className);
     }
