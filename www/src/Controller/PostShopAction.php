@@ -1,20 +1,24 @@
 <?php
 namespace App\Controller;
-use App\Services\ProductService;
+use App\Core\CommandBus;
+use App\Handler\Command\CreateShopCommand;
+use App\Service\ProductService;
 
 class PostShopAction
 {
     private $productService;
+    private $commandBus;
 
-    public function __construct(ProductService $productService) {
+    public function __construct(ProductService $productService, CommandBus $commandBus) {
         $this->productService = $productService;
+        $this->commandBus = $commandBus;
     }
 
     public function __invoke($params)
     {
-        print_r($params);
-        $products = $this->productService->listAll();
-        echo "Liste des produits : " . implode(', ', $products);
+        $createShopCommand = new CreateShopCommand('toto');
+        $this->commandBus->handle($createShopCommand);
+
     }
 
 

@@ -17,19 +17,6 @@ class Shop
     }
 
 
-    public static function find($id) {
-        $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
-        $sql = "SELECT * FROM shops WHERE id = ?";
-        $params = [$id];
-        $stmt = $db->query($sql, $params);
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$result) {
-            return null;
-        }
-        return new Shop($result['id'], $result['name']);
-    }
-
     /**
      * @return mixed
      */
@@ -61,5 +48,28 @@ class Shop
     {
         $this->name = $name;
     }
+
+
+    public static function find($id) {
+        $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
+        $sql = "SELECT * FROM shops WHERE id = ?";
+        $params = [$id];
+        $stmt = $db->query($sql, $params);
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$result) {
+            return null;
+        }
+        return new Shop($result['id'], $result['name']);
+    }
+
+    public function create() {
+        $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
+        $sql = "INSERT INTO shops (name) VALUES (?)";
+        $params = [$this->name];
+        $stmt = $db->query($sql, $params);
+        return $stmt->rowCount();
+    }
+
 
 }

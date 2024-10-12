@@ -19,6 +19,9 @@ class QueryBus
 
     public function handle($query)
     {
+        echo "### QueryBus handle ### <br>";
+        print_r($this->handlers);
+
         $queryClass = get_class($query);
         $queryClass .= 'Handler';
 

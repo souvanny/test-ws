@@ -13,17 +13,22 @@ class CommandBus
 
     public function registerHandler(string $commandClass, callable $handler)
     {
+        echo "### registerHandler ### <br>";
         $this->handlers[$commandClass] = $handler;
     }
 
     public function handle($command)
     {
+        echo "### CommandBus handle ### <br>";
+        print_r($this->handlers);
+
         $commandClass = get_class($command);
+        $commandClass .= 'Handler';
 
         if (!isset($this->handlers[$commandClass])) {
             throw new \Exception("Aucun handler trouvé pour la commande : $commandClass");
         }
 
-        $this->handlers[$commandClass]->handle($command);
+        $this->handlers[$commandClass]($command);
     }
 }

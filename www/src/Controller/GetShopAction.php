@@ -10,7 +10,7 @@ class GetShopAction
     private $productService;
     private $queryBus;
 
-    public function __construct(QueryBus $queryBus, CommandBus $commandBus, ProductService $productService) {
+    public function __construct(QueryBus $queryBus, ProductService $productService) {
         $this->productService = $productService;
         $this->queryBus = $queryBus;
     }
@@ -23,8 +23,8 @@ class GetShopAction
         echo "Liste des produits : " . implode(', ', $products) . "<br>";
         echo "<hr>";
 
-        $getUserByIdQuery = new GetShopByIdQuery(1);
-        $this->queryBus->handle($getUserByIdQuery);
+        $getShopByIdQuery = new GetShopByIdQuery(1);
+        $this->queryBus->handle($getShopByIdQuery);
     }
 
 
