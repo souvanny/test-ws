@@ -1,6 +1,11 @@
 <?php
 
 use App\Controllers\GetStoreAction;
+use App\Core\CommandBus;
+use App\Core\CommandHandlerInterface;
+use App\Core\HandlerLoader;
+use App\Core\QueryBus;
+use App\Core\QueryHandlerInterface;
 use App\Services\ProductService;
 use App\Core\ServiceContainer;
 
@@ -36,6 +41,23 @@ spl_autoload_register(function ($class) {
 //$productController = $container->get(StoreController::class);
 //
 //$productController->list();
+
+
+// Créer les bus
+$commandBus = new CommandBus();
+$queryBus = new QueryBus();
+
+// Créer le loader de handlers
+$handlerLoader = new HandlerLoader();
+
+// Charger automatiquement les handlers de commandes et de requêtes
+$handlerLoader->loadHandlers(__DIR__ . '/src/Handler/Command', CommandHandlerInterface::class, $commandBus);
+$handlerLoader->loadHandlers(__DIR__ . '/src/Handler/Query', QueryHandlerInterface::class, $queryBus);
+
+
+
+
+
 
 
 $container = new ServiceContainer();
