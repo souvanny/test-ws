@@ -45,56 +45,6 @@ spl_autoload_register(function ($class) {
 
 $container = new ServiceContainer();
 
-/*
-// Enregistrement du HandlerLoader
-$container->set('handler_loader', function() {
-    return new HandlerLoader();
-});
-
-// Enregistrement du CommandBus
-$container->set("App\\Core\\CommandBus", function($container) {
-    $commandBus = new CommandBus();
-
-    // Chargement automatique des handlers de commandes
-    $handlerLoader = $container->get('handler_loader');
-    $handlerLoader->loadHandlers(__DIR__ . '/src/Handler', CommandHandlerInterface::class, $commandBus);
-
-    return $commandBus;
-});
-
-// Enregistrement du QueryBus
-$container->set("App\\Core\\QueryBus", function($container) {
-    $queryBus = new QueryBus();
-
-    // Chargement automatique des handlers de requêtes
-    $handlerLoader = $container->get('handler_loader');
-    $handlerLoader->loadHandlers(__DIR__ . '/src/Handler', QueryHandlerInterface::class, $queryBus);
-
-    return $queryBus;
-});
-
-*/
-
-
-//$container->test();
-
-
-/*
-
-// Créer les bus
-$commandBus = new CommandBus();
-$queryBus = new QueryBus();
-
-// Créer le loader de handlers
-$handlerLoader = new HandlerLoader();
-
-// Charger automatiquement les handlers de commandes et de requêtes
-$handlerLoader->loadHandlers(__DIR__ . '/src/Handler', CommandHandlerInterface::class, $commandBus);
-$handlerLoader->loadHandlers(__DIR__ . '/src/Handler', QueryHandlerInterface::class, $queryBus);
-
-
-*/
-
 //$container = new ServiceContainer();
 
 // Récupérer l'URI
