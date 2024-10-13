@@ -2,7 +2,6 @@
 
 namespace App\Database;
 
-use App\Database\Entity\Shop;
 use App\Exception\DatabaseException;
 use PDO;
 
@@ -88,6 +87,40 @@ class EntityRepository
         return $entity;
     }
 
+
+    /**
+     * @throws DatabaseException
+     */
+    public function update($entity)
+    {
+        $idField = $this->entityManager->getEntityConfig()['idColumn'];
+        $methodName = 'get' . ucfirst($idField);
+        $id = $entity->$methodName();
+
+        $fields = $this->entityManager->getEntityConfig()['fields'];
+
+        $sqlFields = [];
+        $params = [];
+
+        foreach ($fields as $field => $type) {
+            $sqlFields[] = $this->camelToSnakeCase($field) . "=?";
+            $methodName = 'get' . ucfirst($field);
+            $params[] = $entity->$methodName();
+        }
+        $params[] = $id;
+
+        $sql = "UPDATE shops SET " . implode(', ', $sqlFields) . " WHERE $idField = ?";
+
+        $this->entityManager->getDb()->query($sql, $params);
+
+
+
+        return $this->find($id);
+    }
+
+    /**
+     * @throws DatabaseException
+     */
     public function remove($entity): void
     {
         $sql = "DELETE FROM shops WHERE id = ?";
@@ -106,8 +139,7 @@ class EntityRepository
         $string = str_replace('_', ' ', strtolower($string));
         $string = ucwords($string);
         $string = str_replace(' ', '', $string);
-        $string = lcfirst($string);
-        return $string;
+        return lcfirst($string);
     }
 
     private function camelToSnakeCase($string)

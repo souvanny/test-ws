@@ -17,9 +17,6 @@ class DeleteShopCommandHandler implements CommandHandlerInterface
     public function __invoke(DeleteShopCommand $command)
     {
         $shop = $this->shopRepository->find($command->id);
-        if (null !== $shop) {
-            $this->shopRepository->remove($shop);
-        }
-
+        $this->shopRepository->remove($shop);
     }
 }

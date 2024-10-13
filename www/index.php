@@ -55,7 +55,7 @@ if ('GET' === $method || 'DELETE' === $method) {
             $params[$urlSegments[$i]] = $urlSegments[$i + 1];
         }
     }
-} else if ('POST' === $method) {
+} else if ('POST' === $method || 'PATCH' === $method) {
     $rawData = file_get_contents("php://input");
     $params = json_decode($rawData, true);
 }
