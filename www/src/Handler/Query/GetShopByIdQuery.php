@@ -4,7 +4,7 @@ namespace App\Handler\Query;
 
 class GetShopByIdQuery
 {
-    public $id;
+    public int $id;
 
     public function __construct(int $id)
     {

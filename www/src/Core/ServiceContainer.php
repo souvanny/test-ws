@@ -3,14 +3,13 @@
 namespace App\Core;
 
 use ReflectionClass;
+use ReflectionException;
 use Relay\Exception;
 
 class ServiceContainer
 {
-//    private $services = [];
     private $instances = [];
 
-    // Enregistrer un service (lazy-loaded)
     public function register($name, callable $resolver)
     {
         $this->instances[$name] = $resolver;
@@ -21,7 +20,13 @@ class ServiceContainer
         $this->instances[$name] = $service;
     }
 
-    // Récupérer un service
+    /**
+     *
+     * Récupérer un service
+     *
+     * @throws ReflectionException
+     * @throws Exception
+     */
     public function get($className)
     {
         // Si le service est déjà instancié, le retourner

@@ -2,9 +2,11 @@
 
 namespace App\Core;
 
+use Exception;
+
 class CommandBus
 {
-    protected $handlers = [];
+    protected array $handlers = [];
 
     public function __construct(HandlerLoader $handlerLoader)
     {
@@ -16,13 +18,16 @@ class CommandBus
         $this->handlers[$commandClass] = $handler;
     }
 
+    /**
+     * @throws Exception
+     */
     public function handle($command)
     {
         $commandClass = get_class($command);
         $commandClass .= 'Handler';
 
         if (!isset($this->handlers[$commandClass])) {
-            throw new \Exception("Aucun handler trouvé pour la commande : $commandClass");
+            throw new Exception("Aucun handler trouvé pour la commande : $commandClass");
         }
 
         return $this->handlers[$commandClass]($command);

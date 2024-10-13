@@ -2,13 +2,11 @@
 
 namespace App\Database;
 
-use App\Config\Config;
-
 class EntityManager
 {
-    private $db;
-    private $entityClass;
-    private $entityConfig = [];
+    private Database $db;
+    private string $entityClass;
+    private array $entityConfig = [];
     public function __construct(string $entityClass)
     {
         $this->entityClass = $entityClass;

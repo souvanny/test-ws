@@ -9,7 +9,7 @@ use App\Database\Repository\ShopRepository;
 
 class GetShopByIdQueryHandler implements QueryHandlerInterface
 {
-    private $shopRepository;
+    private ShopRepository $shopRepository;
 
     public function __construct(ShopRepository $shopRepository)
     {
@@ -18,8 +18,6 @@ class GetShopByIdQueryHandler implements QueryHandlerInterface
 
     public function __invoke(GetShopByIdQuery $query): Shop
     {
-        $shop = $this->shopRepository->find($query->id);
-
-        return $shop;
+        return $this->shopRepository->find($query->id);
     }
 }

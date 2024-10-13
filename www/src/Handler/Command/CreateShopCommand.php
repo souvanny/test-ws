@@ -4,7 +4,7 @@ namespace App\Handler\Command;
 
 class CreateShopCommand
 {
-    public $name;
+    public string $name;
 
     public function __construct(string $name)
     {

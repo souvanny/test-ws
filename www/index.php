@@ -1,13 +1,8 @@
 <?php
 
-use App\Controller\GetShopAction;
-use App\Core\CommandBus;
-use App\Core\CommandHandlerInterface;
-use App\Core\HandlerLoader;
-use App\Core\QueryBus;
-use App\Core\QueryHandlerInterface;
-use App\Service\ShopService;
 use App\Core\ServiceContainer;
+use App\Exception\DatabaseException;
+use App\Response\JsonResponse;
 
 spl_autoload_register(function ($class) {
 
@@ -52,10 +47,6 @@ $controller = ucfirst(strtolower($method)) . $controller;
 
 $controller = "App\\Controller\\$controller";
 
-
-
-//echo "controller: $controller $method ===<br>";
-
 $params = [];
 
 if ('GET' === $method || 'DELETE' === $method) {
@@ -68,28 +59,31 @@ if ('GET' === $method || 'DELETE' === $method) {
 
 } else if ('POST' === $method) {
 
-//    echo "Traitement POST =====<br> ";
-
     $rawData = file_get_contents("php://input");
 
     $params = json_decode($rawData, true);
 
 }
 
-
-
-//echo "params : ".print_r($params, true)." <br>";
-
-
 if (class_exists($controller)) {
 
     $controllerInstance = $container->get($controller);
 
-    $response = $controllerInstance($params);
-    $response->send();
+    try {
+        $response = $controllerInstance($params);
+        $response->send();
+    } catch (DatabaseException $exception) {
+        $response = new JsonResponse(['erreur' => true, 'message' => 'ERREUR DB : ' . $exception->getMessage()], 500);
+        $response->send();
+    } catch (\Throwable $exception) {
+        $response = new JsonResponse(['erreur' => true, 'message' => $exception->getMessage()], 500);
+        $response->send();
+    }
+
 
 } else {
-    echo "Le contrôleur $controller n'existe pas.";
+    $response = new JsonResponse(['erreur' => true, 'message' => "Le controleur n'existe pas"], 404);
+    $response->send();
 }
 
 

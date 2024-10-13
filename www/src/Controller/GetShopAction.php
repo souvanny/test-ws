@@ -9,8 +9,8 @@ use App\Service\ShopService;
 
 class GetShopAction
 {
-    private $shopService;
-    private $queryBus;
+    private ShopService $shopService;
+    private QueryBus $queryBus;
 
     public function __construct(QueryBus $queryBus, ShopService $shopService)
     {
@@ -18,6 +18,9 @@ class GetShopAction
         $this->queryBus = $queryBus;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function __invoke($params): JsonResponse
     {
         $getShopByIdQuery = new GetShopByIdQuery($params['id']);

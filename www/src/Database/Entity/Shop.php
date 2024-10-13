@@ -2,9 +2,6 @@
 
 namespace App\Database\Entity;
 
-use App\Database\Database;
-use PDO;
-
 class Shop
 {
     private ?int $id;
@@ -47,6 +44,5 @@ class Shop
     {
         $this->isDeleted = $isDeleted;
     }
-
 
 }

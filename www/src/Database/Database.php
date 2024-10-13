@@ -2,29 +2,40 @@
 
 namespace App\Database;
 
+use App\Exception\DatabaseException;
 use PDO;
 
-class Database {
-    private $host;
-    private $user;
-    private $pass;
-    private $dbname;
+class Database
+{
+    private string $host;
+    private string $user;
+    private string $pass;
+    private string $dbname;
     private $pdo;
 
-    public function __construct($host, $user, $pass, $dbname) {
+    public function __construct(string $host, string $user, string $pass, string $dbname)
+    {
         $this->host = $host;
         $this->user = $user;
         $this->pass = $pass;
         $this->dbname = $dbname;
-        $this->connect();
-    }
-    private function connect() {
+
         $dsn = "mysql:host=$this->host;dbname=$this->dbname";
         $this->pdo = new PDO($dsn, $this->user, $this->pass);
     }
-    public function query($sql, $params = []) {
+
+    public function query($sql, $params = [])
+    {
         $stmt = $this->pdo->prepare($sql);
+
         $stmt->execute($params);
+
+        $errors = $stmt->errorInfo();
+
+        if ('00000' !== $errors[0]) {
+            throw new DatabaseException($errors[2]);
+        }
+
         return $stmt;
     }
 

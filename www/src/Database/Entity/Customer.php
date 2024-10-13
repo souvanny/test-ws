@@ -2,9 +2,6 @@
 
 namespace App\Database\Entity;
 
-use App\Database\Database;
-use PDO;
-
 class Customer
 {
     private ?int $id;

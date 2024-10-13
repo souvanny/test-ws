@@ -5,20 +5,19 @@ namespace App\Controller;
 use App\Core\CommandBus;
 use App\Handler\Command\DeleteShopCommand;
 use App\Response\JsonResponse;
-use App\Response\Response;
-use App\Service\ShopService;
 
 class DeleteShopAction
 {
-    private $productService;
-    private $commandBus;
+    private CommandBus $commandBus;
 
-    public function __construct(ShopService $productService, CommandBus $commandBus)
+    public function __construct(CommandBus $commandBus)
     {
-        $this->productService = $productService;
         $this->commandBus = $commandBus;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function __invoke($params): JsonResponse
     {
         $deleteShopCommand = new DeleteShopCommand($params['id']);
@@ -26,6 +25,5 @@ class DeleteShopAction
 
         return new JsonResponse(['result' => true]);
     }
-
 
 }

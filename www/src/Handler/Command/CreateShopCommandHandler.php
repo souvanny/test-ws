@@ -8,7 +8,7 @@ use App\Database\Repository\ShopRepository;
 
 class CreateShopCommandHandler implements CommandHandlerInterface
 {
-    private $shopRepository;
+    private ShopRepository $shopRepository;
 
     public function __construct(ShopRepository $shopRepository)
     {

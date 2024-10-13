@@ -5,7 +5,8 @@ namespace App\Database;
 class ManagerRegistry
 {
 
-    private $managers = [];
+    private array $managers = [];
+
     public function getManagerForClass(string $entityClass): EntityManager
     {
         if (isset($this->managers[$entityClass])) {
@@ -13,6 +14,8 @@ class ManagerRegistry
         }
         $instance = new EntityManager($entityClass);
         $this->managers[$entityClass] = $instance;
+
         return $instance;
     }
+
 }

@@ -9,7 +9,8 @@ use App\Service\ShopService;
 
 class PostShopAction
 {
-    private $commandBus;
+    private CommandBus $commandBus;
+    private ShopService $shopService;
 
     public function __construct(CommandBus $commandBus, ShopService $shopService)
     {
@@ -17,6 +18,9 @@ class PostShopAction
         $this->commandBus = $commandBus;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function __invoke($params): JsonResponse
     {
         $createShopCommand = new CreateShopCommand($params['name']);

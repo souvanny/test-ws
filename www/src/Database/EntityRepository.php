@@ -9,7 +9,7 @@ class EntityRepository
 {
     private string $entityClass;
 
-    private $entityManager;
+    private EntityManager $entityManager;
 
     public function __construct(ManagerRegistry $managerRegistry, string $entityClass)
     {

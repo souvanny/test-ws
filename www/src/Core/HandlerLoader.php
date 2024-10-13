@@ -19,12 +19,6 @@ class HandlerLoader
 
                 // Vérifier si la classe implémente l'interface du handler
                 if ($reflection->implementsInterface($interface)) {
-//                    $handlerInstance = $reflection->newInstance();
-//                    // Enregistrer automatiquement le handler dans le bus
-//                    $this->registerHandler($handlerInstance, $bus);
-
-
-
                     $handlerInstance = $this->get($className);
                     // Enregistrer automatiquement le handler dans le bus
                     $this->registerHandler($handlerInstance, $bus);
@@ -32,7 +26,6 @@ class HandlerLoader
             }
         }
     }
-
 
     public function get($className)
     {
@@ -77,6 +70,7 @@ class HandlerLoader
 
         return $instance;
     }
+
     private function getClassNameFromFile($file, $interface)
     {
         // Extraire le nom de la classe à partir du chemin du fichier
