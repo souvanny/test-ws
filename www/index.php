@@ -6,7 +6,7 @@ use App\Core\CommandHandlerInterface;
 use App\Core\HandlerLoader;
 use App\Core\QueryBus;
 use App\Core\QueryHandlerInterface;
-use App\Service\ProductService;
+use App\Service\ShopService;
 use App\Core\ServiceContainer;
 
 spl_autoload_register(function ($class) {

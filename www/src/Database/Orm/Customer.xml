@@ -1,0 +1,11 @@
+<orm-mapping>
+
+    <entity name="App\Database\Entity\Customer" table="customers">
+
+        <id name="id" column="id"/>
+        <field name="name" type="string" nullable="false"/>
+        <field name="isDeleted" type="integer" nullable="false"/>
+
+    </entity>
+
+</orm-mapping>

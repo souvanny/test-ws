@@ -3,28 +3,26 @@ namespace App\Controller;
 use App\Core\CommandBus;
 use App\Core\QueryBus;
 use App\Handler\Query\GetShopByIdQuery;
-use App\Service\ProductService;
+use App\Service\ShopService;
 
 class GetShopAction
 {
-    private $productService;
+    private $shopService;
     private $queryBus;
 
-    public function __construct(QueryBus $queryBus, ProductService $productService) {
-        $this->productService = $productService;
+    public function __construct(QueryBus $queryBus, ShopService $shopService) {
+        $this->shopService = $shopService;
         $this->queryBus = $queryBus;
     }
 
     public function __invoke($params)
     {
-        echo "<hr>";
-        print_r($params);
-        $products = $this->productService->listAll();
-        echo "Liste des produits : " . implode(', ', $products) . "<br>";
-        echo "<hr>";
+        $getShopByIdQuery = new GetShopByIdQuery(5);
+        $shop = $this->queryBus->handle($getShopByIdQuery);
 
-        $getShopByIdQuery = new GetShopByIdQuery(1);
-        $this->queryBus->handle($getShopByIdQuery);
+        $shopDTO = $this->shopService->transformToDTO($shop);
+
+        print_r($shopDTO);
     }
 
 

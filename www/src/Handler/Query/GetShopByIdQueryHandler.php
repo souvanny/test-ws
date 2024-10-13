@@ -4,28 +4,23 @@ namespace App\Handler\Query;
 
 use App\Core\QueryHandlerInterface;
 use App\Database\Entity\Shop;
+use App\Database\Repository\CustomerRepository;
+use App\Database\Repository\ShopRepository;
 
 
 class GetShopByIdQueryHandler implements QueryHandlerInterface
 {
-//    private $shopRepository;
-//
-//    public function __construct(ShopRepository $shopRepository)
-//    {
-//        $this->shopRepository = $shopRepository;
-//    }
+    private $shopRepository;
 
-    public function __invoke($query)
+    public function __construct(ShopRepository $shopRepository, CustomerRepository $customerRepository)
     {
-        // Logique pour récupérer un utilisateur par ID
-        echo "Détails de l'utilisateur avec ID : " . $query->userId . "<br>\n";
-        $shop = new Shop();
+        $this->shopRepository = $shopRepository;
+    }
 
-        print_r($shop->find(1));
+    public function __invoke($query): Shop
+    {
+        $shop = $this->shopRepository->find(5);
 
-//        $shop = $this->shopRepository->find($query->userId);
-//
-//        print_r($shop);
-
+        return $shop;
     }
 }

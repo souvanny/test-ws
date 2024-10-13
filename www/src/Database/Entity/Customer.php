@@ -5,7 +5,7 @@ namespace App\Database\Entity;
 use App\Database\Database;
 use PDO;
 
-class Shop
+class Customer
 {
     private ?int $id;
     private ?string $name;

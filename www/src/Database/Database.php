@@ -18,7 +18,7 @@ class Database {
         $this->dbname = $dbname;
         $this->connect();
     }
-    public function connect() {
+    private function connect() {
         $dsn = "mysql:host=$this->host;dbname=$this->dbname";
         $this->pdo = new PDO($dsn, $this->user, $this->pass);
     }
