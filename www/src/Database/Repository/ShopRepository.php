@@ -12,7 +12,6 @@ class ShopRepository extends EntityRepository
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, Shop::class);
-        echo "ShopRepository CONSTRUCT <br>";
     }
 
 

@@ -54,13 +54,12 @@ $controller = "App\\Controller\\$controller";
 
 
 
-echo "controller: $controller $method ===<br>";
+//echo "controller: $controller $method ===<br>";
 
 $params = [];
 
 if ('GET' === $method || 'DELETE' === $method) {
 
-    // Décomposer les paramètres nommés (key-value pairs)
     for ($i = 1; $i < count($urlSegments); $i += 2) {
         if (isset($urlSegments[$i + 1])) {
             $params[$urlSegments[$i]] = $urlSegments[$i + 1];
@@ -69,7 +68,7 @@ if ('GET' === $method || 'DELETE' === $method) {
 
 } else if ('POST' === $method) {
 
-    echo "Traitement POST =====<br> ";
+//    echo "Traitement POST =====<br> ";
 
     $rawData = file_get_contents("php://input");
 
@@ -79,14 +78,15 @@ if ('GET' === $method || 'DELETE' === $method) {
 
 
 
-echo "params : ".print_r($params, true)." <br>";
+//echo "params : ".print_r($params, true)." <br>";
 
 
 if (class_exists($controller)) {
 
     $controllerInstance = $container->get($controller);
 
-    $controllerInstance($params);
+    $response = $controllerInstance($params);
+    $response->send();
 
 } else {
     echo "Le contrôleur $controller n'existe pas.";

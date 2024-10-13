@@ -13,7 +13,6 @@ class EntityRepository
 
     public function __construct(ManagerRegistry $managerRegistry, string $entityClass)
     {
-        echo "EntityRepository CONSTRUCT <br>";
         $this->entityClass = $entityClass;
         $this->entityManager = $managerRegistry->getManagerForClass($entityClass);
     }
@@ -84,10 +83,16 @@ class EntityRepository
         return $entity;
     }
 
-    public function remove(): void
+    public function remove($entity): void
     {
-        $sql = "DELETE FROM shops WHERE id=?";
-        $params = [$this->id];
+        $sql = "DELETE FROM shops WHERE id = ?";
+
+        $idField = $this->entityManager->getEntityConfig()['idColumn'];
+        $methodName = 'get' . ucfirst($idField);
+
+        $id = $entity->$methodName();
+
+        $params = [$id];
         $this->entityManager->getDb()->query($sql, $params);
     }
 
@@ -103,8 +108,7 @@ class EntityRepository
     private function camelToSnakeCase($string)
     {
         $string = preg_replace('/([a-z])([A-Z])/', '$1_$2', $string);
-        $string = strtolower($string);
-        return $string;
+        return strtolower($string);
     }
 
 }

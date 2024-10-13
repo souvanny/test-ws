@@ -36,8 +36,6 @@ class HandlerLoader
 
     public function get($className)
     {
-        echo "## ServiceContainer $className <br>";
-
         // Si le service est déjà instancié, le retourner
         if (isset($this->instances[$className])) {
             return $this->instances[$className];
