@@ -11,11 +11,8 @@ use App\Core\ServiceContainer;
 
 spl_autoload_register(function ($class) {
 
-//    echo "class: $class ===<br>";
-
     $prefix = 'App\\';
     $base_dir = __DIR__ . '/src/';
-//    echo "base_dir: $base_dir ===<br>";
 
     if (strncmp($prefix, $class, strlen($prefix)) !== 0) {
         echo "préfixe manquant ===<br>";
@@ -23,29 +20,17 @@ spl_autoload_register(function ($class) {
     }
 
     $relative_class = substr($class, strlen($prefix));
-//    echo "relative_class: $relative_class ===<br>";
 
     $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-//    echo "file: $file ===<br>";
 
     if (file_exists($file)) {
-//        echo "file exists : $file OK ===<br>";
         require $file;
     }
 
 });
 
 
-//$container = new ServiceContainer();
-//
-//$productController = $container->get(StoreController::class);
-//
-//$productController->list();
-
-
 $container = new ServiceContainer();
-
-//$container = new ServiceContainer();
 
 // Récupérer l'URI
 $request = $_SERVER['REQUEST_URI'];
@@ -69,15 +54,29 @@ $controller = "App\\Controller\\$controller";
 
 
 
-echo "controller: $controller ===<br>";
+echo "controller: $controller $method ===<br>";
 
-// Décomposer les paramètres nommés (key-value pairs)
 $params = [];
-for ($i = 1; $i < count($urlSegments); $i += 2) {
-    if (isset($urlSegments[$i + 1])) {
-        $params[$urlSegments[$i]] = $urlSegments[$i + 1];
+
+if ('GET' === $method || 'DELETE' === $method) {
+
+    // Décomposer les paramètres nommés (key-value pairs)
+    for ($i = 1; $i < count($urlSegments); $i += 2) {
+        if (isset($urlSegments[$i + 1])) {
+            $params[$urlSegments[$i]] = $urlSegments[$i + 1];
+        }
     }
+
+} else if ('POST' === $method) {
+
+    echo "Traitement POST =====<br> ";
+
+    $rawData = file_get_contents("php://input");
+
+    $params = json_decode($rawData, true);
+
 }
+
 
 
 echo "params : ".print_r($params, true)." <br>";

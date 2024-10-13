@@ -6,17 +6,16 @@ use App\Service\ShopService;
 
 class PostShopAction
 {
-    private $productService;
     private $commandBus;
 
-    public function __construct(ShopService $productService, CommandBus $commandBus) {
-        $this->productService = $productService;
+    public function __construct(CommandBus $commandBus) {
         $this->commandBus = $commandBus;
     }
 
     public function __invoke($params)
     {
-        $createShopCommand = new CreateShopCommand('toto');
+
+        $createShopCommand = new CreateShopCommand($params['name']);
         $this->commandBus->handle($createShopCommand);
 
     }

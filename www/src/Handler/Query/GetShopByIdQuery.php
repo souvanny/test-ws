@@ -4,10 +4,10 @@ namespace App\Handler\Query;
 
 class GetShopByIdQuery
 {
-    public $userId;
+    public $id;
 
-    public function __construct(int $userId)
+    public function __construct(int $id)
     {
-        $this->userId = $userId;
+        $this->id = $id;
     }
 }

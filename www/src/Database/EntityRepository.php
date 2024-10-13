@@ -58,8 +58,11 @@ class EntityRepository
         return new Shop($result['id'], $result['name']);
     }
 
-    public function create(): void
+    public function add($entity): void
     {
+        $fields = $this->entityManager->getEntityConfig()['fields'];
+
+
         $sql = "INSERT INTO shops (name, is_deleted) VALUES (?, ?)";
         $params = [$this->name, $this->isDeleted ? 1 : 0];
         $this->entityManager->getDb()->query($sql, $params);
