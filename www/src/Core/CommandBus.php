@@ -25,6 +25,6 @@ class CommandBus
             throw new \Exception("Aucun handler trouvé pour la commande : $commandClass");
         }
 
-        $this->handlers[$commandClass]($command);
+        return $this->handlers[$commandClass]($command);
     }
 }

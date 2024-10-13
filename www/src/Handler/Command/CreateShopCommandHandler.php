@@ -14,13 +14,12 @@ class CreateShopCommandHandler implements CommandHandlerInterface
     {
         $this->shopRepository = $shopRepository;
     }
-    public function __invoke(CreateShopCommand $command): void
+
+    public function __invoke(CreateShopCommand $command): Shop
     {
         $shop = new Shop();
         $shop->setName($command->name);
 
-        $shop = $this->shopRepository->add($shop);
-
-
+        return $this->shopRepository->add($shop);
     }
 }

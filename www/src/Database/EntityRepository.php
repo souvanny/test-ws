@@ -58,7 +58,7 @@ class EntityRepository
         return new Shop($result['id'], $result['name']);
     }
 
-    public function add($entity): void
+    public function add($entity)
     {
         $fields = $this->entityManager->getEntityConfig()['fields'];
 
@@ -76,6 +76,12 @@ class EntityRepository
         $sql = "INSERT INTO shops (" . implode(', ', $sqlFields) . ") VALUES (" . implode(', ', $sqlValues) . ")";
 
         $this->entityManager->getDb()->query($sql, $params);
+
+        $lastId = $this->entityManager->getDb()->lastInsertId();
+
+        $entity->setId($lastId);
+
+        return $entity;
     }
 
     public function remove(): void
