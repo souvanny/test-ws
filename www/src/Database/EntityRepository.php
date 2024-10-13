@@ -50,7 +50,7 @@ class EntityRepository
 
         $fields = $this->entityManager->getEntityConfig()['fields'];
 
-        foreach($fields as $field => $type) {
+        foreach ($fields as $field => $type) {
             $methodName = 'set' . ucfirst($field);
             $entity->$methodName($result[$this->camelToSnakeCase($field)]);
         }
@@ -62,9 +62,19 @@ class EntityRepository
     {
         $fields = $this->entityManager->getEntityConfig()['fields'];
 
+        $sqlFields = [];
+        $sqlValues = [];
+        $params = [];
 
-        $sql = "INSERT INTO shops (name, is_deleted) VALUES (?, ?)";
-        $params = [$this->name, $this->isDeleted ? 1 : 0];
+        foreach ($fields as $field => $type) {
+            $sqlFields[] = $this->camelToSnakeCase($field);
+            $sqlValues[] = '?';
+            $methodName = 'get' . ucfirst($field);
+            $params[] = $entity->$methodName();
+        }
+
+        $sql = "INSERT INTO shops (" . implode(', ', $sqlFields) . ") VALUES (" . implode(', ', $sqlValues) . ")";
+
         $this->entityManager->getDb()->query($sql, $params);
     }
 
@@ -75,7 +85,8 @@ class EntityRepository
         $this->entityManager->getDb()->query($sql, $params);
     }
 
-    private function snakeToCamelCase($string) {
+    private function snakeToCamelCase($string)
+    {
         $string = str_replace('_', ' ', strtolower($string));
         $string = ucwords($string);
         $string = str_replace(' ', '', $string);
@@ -83,12 +94,10 @@ class EntityRepository
         return $string;
     }
 
-    private function camelToSnakeCase($string) {
-        $string = preg_replace('/[A-Z]/', '_$0', $string);
+    private function camelToSnakeCase($string)
+    {
+        $string = preg_replace('/([a-z])([A-Z])/', '$1_$2', $string);
         $string = strtolower($string);
-        if ($string[0] === '_') {
-            $string = substr($string, 1);
-        }
         return $string;
     }
 
