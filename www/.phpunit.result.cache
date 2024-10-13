@@ -1,1 +1,1 @@
-{"version":1,"defects":{"GreeterTest::testGreetsWithName":4},"times":{"GreeterTest::testGreetsWithName":0}}
+{"version":1,"defects":{"GreeterTest::testGreetsWithName":4,"ShopDTOTest::testShopDTOPropertiesAreSetCorrectly":5},"times":{"GreeterTest::testGreetsWithName":0,"ShopDTOTest::testShopDTOPropertiesAreSetCorrectly":0.001}}
