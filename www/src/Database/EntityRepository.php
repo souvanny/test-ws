@@ -87,7 +87,6 @@ class EntityRepository
         return $entity;
     }
 
-
     /**
      * @throws DatabaseException
      */
@@ -112,8 +111,6 @@ class EntityRepository
         $sql = "UPDATE shops SET " . implode(', ', $sqlFields) . " WHERE $idField = ?";
 
         $this->entityManager->getDb()->query($sql, $params);
-
-
 
         return $this->find($id);
     }
