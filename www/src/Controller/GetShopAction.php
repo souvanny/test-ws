@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Core\QueryBus;
 use App\Handler\Query\GetShopByIdQuery;
+use App\Handler\Query\GetShopsByParamsQuery;
 use App\Response\JsonResponse;
 use App\Service\ShopService;
+use Exception;
 
 class GetShopAction
 {
@@ -19,16 +21,28 @@ class GetShopAction
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function __invoke($params): JsonResponse
     {
-        $getShopByIdQuery = new GetShopByIdQuery($params['id']);
-        $shop = $this->queryBus->handle($getShopByIdQuery);
+        if (1 === count($params) && isset($params['id'])) {
+            $getShopByIdQuery = new GetShopByIdQuery($params['id']);
+            $shop = $this->queryBus->handle($getShopByIdQuery);
 
-        $shopDTO = $this->shopService->transformToDTO($shop);
+            $shopDTO = $this->shopService->transformToDTO($shop);
 
-        return new JsonResponse($shopDTO);
+            return new JsonResponse($shopDTO);
+        } else {
+
+            $getShopsByParamsQuery = new GetShopsByParamsQuery($params);
+            $shops = $this->queryBus->handle($getShopsByParamsQuery);
+
+            $searchShopsDTO = $this->shopService->transformSearchToDTO($shops);
+
+            return new JsonResponse($searchShopsDTO);
+
+        }
+
     }
 
 

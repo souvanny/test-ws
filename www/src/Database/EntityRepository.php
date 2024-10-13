@@ -7,9 +7,9 @@ use PDO;
 
 class EntityRepository
 {
-    private string $entityClass;
+    protected string $entityClass;
 
-    private EntityManager $entityManager;
+    protected EntityManager $entityManager;
 
     public function __construct(ManagerRegistry $managerRegistry, string $entityClass)
     {
@@ -38,10 +38,9 @@ class EntityRepository
      */
     public function find($id)
     {
-        $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
         $sql = "SELECT * FROM " . $this->entityManager->getEntityConfig()['entityTable'] . " WHERE id = ?";
         $params = [$id];
-        $stmt = $db->query($sql, $params);
+        $stmt = $this->entityManager->getDb()->query($sql, $params);
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$result) {
@@ -131,7 +130,7 @@ class EntityRepository
         $this->entityManager->getDb()->query($sql, $params);
     }
 
-    private function snakeToCamelCase($string)
+    protected function snakeToCamelCase($string)
     {
         $string = str_replace('_', ' ', strtolower($string));
         $string = ucwords($string);
@@ -139,7 +138,7 @@ class EntityRepository
         return lcfirst($string);
     }
 
-    private function camelToSnakeCase($string)
+    protected function camelToSnakeCase($string)
     {
         $string = preg_replace('/([a-z])([A-Z])/', '$1_$2', $string);
         return strtolower($string);
