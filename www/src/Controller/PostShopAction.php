@@ -23,7 +23,7 @@ class PostShopAction
      */
     public function __invoke($params): JsonResponse
     {
-        $createShopCommand = new CreateShopCommand($params['name']);
+        $createShopCommand = new CreateShopCommand($params['name'], $params['city']);
         $shop = $this->commandBus->handle($createShopCommand);
 
         $shopDTO = $this->shopService->transformToDTO($shop);

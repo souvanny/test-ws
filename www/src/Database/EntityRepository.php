@@ -3,6 +3,7 @@
 namespace App\Database;
 
 use App\Database\Entity\Shop;
+use App\Exception\DatabaseException;
 use PDO;
 
 class EntityRepository
@@ -33,7 +34,10 @@ class EntityRepository
         return $this->entityClass;
     }
 
-    public function find($id): ?Shop
+    /**
+     * @throws DatabaseException
+     */
+    public function find($id)
     {
         $db = new Database('lamp-mariadb106', 'wshop', 'password', 'wshop');
         $sql = "SELECT * FROM " . $this->entityManager->getEntityConfig()['entityTable'] . " WHERE id = ?";
@@ -42,7 +46,7 @@ class EntityRepository
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$result) {
-            return null;
+            throw new DatabaseException("Entite non trouvé", 404);
         }
 
         $entity = new $this->entityClass();
@@ -53,8 +57,9 @@ class EntityRepository
             $methodName = 'set' . ucfirst($field);
             $entity->$methodName($result[$this->camelToSnakeCase($field)]);
         }
+        $entity->setId($result['id']);
 
-        return new Shop($result['id'], $result['name']);
+        return $entity;
     }
 
     public function add($entity)

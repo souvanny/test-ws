@@ -4,7 +4,7 @@
 
         <id name="id" column="id"/>
         <field name="name" type="string" nullable="false"/>
-        <field name="isDeleted" type="integer" nullable="false"/>
+        <field name="city" type="string" nullable="false"/>
 
     </entity>
 

@@ -3,10 +3,14 @@
 namespace App\Core;
 
 use ReflectionClass;
+use ReflectionException;
 use Relay\Exception;
 
 class HandlerLoader
 {
+    /**
+     * @throws Exception
+     */
     public function loadHandlers($directory, $interface, $bus)
     {
         // Parcourir tous les fichiers PHP du répertoire donné
@@ -27,6 +31,10 @@ class HandlerLoader
         }
     }
 
+    /**
+     * @throws ReflectionException
+     * @throws Exception
+     */
     public function get($className)
     {
         // Si le service est déjà instancié, le retourner
@@ -71,7 +79,7 @@ class HandlerLoader
         return $instance;
     }
 
-    private function getClassNameFromFile($file, $interface)
+    private function getClassNameFromFile($file, $interface): string
     {
         // Extraire le nom de la classe à partir du chemin du fichier
         if (false !== strpos($interface, 'QueryHandlerInterface')) {

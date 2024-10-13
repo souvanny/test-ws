@@ -6,13 +6,13 @@ class Shop
 {
     private ?int $id;
     private ?string $name;
-    private ?int $isDeleted;
+    private ?string $city;
 
-    public function __construct(int $id = null, string $name = null, bool $isDeleted = false)
+    public function __construct(int $id = null, string $name = null, string $city = null)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->isDeleted = $isDeleted;
+        $this->city = $city;
     }
 
     public function getId(): ?int
@@ -35,14 +35,14 @@ class Shop
         $this->name = $name;
     }
 
-    public function getIsDeleted(): ?int
+    public function getCity(): ?string
     {
-        return $this->isDeleted;
+        return $this->city;
     }
 
-    public function setIsDeleted(?int $isDeleted): void
+    public function setCity(?string $city): void
     {
-        $this->isDeleted = $isDeleted;
+        $this->city = $city;
     }
 
 }

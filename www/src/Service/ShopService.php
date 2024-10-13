@@ -7,7 +7,8 @@ class ShopService {
     public function transformToDTO(Shop $shop): ShopDTO {
         return new ShopDTO(
             $shop->getId(),
-            $shop->getName()
+            $shop->getName(),
+            $shop->getCity()
         );
     }
 }

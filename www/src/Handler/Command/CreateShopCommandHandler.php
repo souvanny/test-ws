@@ -19,6 +19,7 @@ class CreateShopCommandHandler implements CommandHandlerInterface
     {
         $shop = new Shop();
         $shop->setName($command->name);
+        $shop->setCity($command->city);
 
         return $this->shopRepository->add($shop);
     }
