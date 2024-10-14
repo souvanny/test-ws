@@ -26,5 +26,11 @@ up:
 down:
 	${DOCKER_COMPOSE} down
 
+reset:
+	${DOCKER_COMPOSE} --volumes --rmi all
+
+rebuild:
+	${DOCKER_COMPOSE} up --build --force-recreate --no-deps
+
 test:
 	docker run --rm -v ./www:/app -w /app lamp-webserver php ./phpunit.phar tests/unit/
