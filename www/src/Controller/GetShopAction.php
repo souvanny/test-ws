@@ -9,6 +9,10 @@ use App\Response\JsonResponse;
 use App\Service\ShopService;
 use Exception;
 
+/**
+ * Controleur de récupération de shop en fonction d'un id
+ * Une explication générique est dans PostShopAction (commande, bus, dto))
+ */
 class GetShopAction
 {
     private ShopService $shopService;

@@ -6,6 +6,10 @@ use App\Core\CommandBus;
 use App\Handler\Command\DeleteShopCommand;
 use App\Response\JsonResponse;
 
+/**
+ * Controleur de suppression de shop
+ * Une explication générique est dans PostShopAction (commande, bus, dto))
+ */
 class DeleteShopAction
 {
     private CommandBus $commandBus;

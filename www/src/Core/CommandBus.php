@@ -4,6 +4,10 @@ namespace App\Core;
 
 use Exception;
 
+/**
+ * Centralise l'envoi et la gestion des commandes dans l'application.
+ * Son rôle est de prendre une commande et de la faire traiter par le bon handler
+ */
 class CommandBus
 {
     protected array $handlers = [];

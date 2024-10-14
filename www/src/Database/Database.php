@@ -5,6 +5,9 @@ namespace App\Database;
 use App\Exception\DatabaseException;
 use PDO;
 
+/**
+ * traite ici le connexion et les requêtes bdd
+ */
 class Database
 {
     private string $host;

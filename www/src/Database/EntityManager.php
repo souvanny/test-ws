@@ -2,6 +2,10 @@
 
 namespace App\Database;
 
+/**
+ * à l'instar de Doctrine, c'est ici qu'on manage les entités
+ * Un entity manager par repository
+ */
 class EntityManager
 {
     private Database $db;

@@ -4,6 +4,10 @@ namespace App\Core;
 
 use Exception;
 
+/**
+ * Centralise l'envoi et la gestion des requêtes dans l'application.
+ * Son rôle est de prendre une requête et de la faire traiter par le bon handler
+ */
 class QueryBus
 {
     protected array $handlers = [];

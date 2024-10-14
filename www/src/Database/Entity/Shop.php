@@ -2,6 +2,10 @@
 
 namespace App\Database\Entity;
 
+/**
+ * Décrit l'entité Shop avec tous ses champs
+ * ainsi que leur getter setter
+ */
 class Shop
 {
     private ?int $id;

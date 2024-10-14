@@ -12,6 +12,10 @@ class PatchShopAction
     private CommandBus $commandBus;
     private ShopService $shopService;
 
+    /**
+     * Controleur de modification partielle de shop
+     * Une explication générique est dans PostShopAction (commande, bus, dto))
+     */
     public function __construct(CommandBus $commandBus, ShopService $shopService)
     {
         $this->shopService = $shopService;
